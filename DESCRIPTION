@@ -1,11 +1,24 @@
 Package: readSX
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.1
+Title: Read SurveyXact Data into R
+Version: 0.7.0
 Authors@R: 
     person("Stephan", "Daus", , "stephus.daus@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-0230-6997"))
 Description: What the package does (one paragraph).
-License: File LICENSE
+License: MIT + file LICENSE
+Imports:
+    dplyr,
+    glue,
+    labelled,
+    lifecycle,
+    purrr,
+    readxl,
+    rlang,
+    vctrs,
+    tidyselect
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.0

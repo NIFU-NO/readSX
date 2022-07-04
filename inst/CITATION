@@ -1,0 +1,13 @@
+citHeader("To cite readSX in publications use:")
+
+citEntry(entry = "Unpublished",
+  title        = "Read Survey Data from SurveyXact with {readSX}",
+  author       = personList(as.person("Stephan Daus")),
+  year         = "2022",
+  address = "Tvetenveien 231, 0675 Oslo",
+  note = "An R-package developed for researchers and pollsters in the social sciences.",
+  url = "https://github.com/sda030/surveyreport",
+
+  textVersion  =
+  paste("Daus, S. (2022). Read Survey Data from SurveyXact with readSX.")
+)
