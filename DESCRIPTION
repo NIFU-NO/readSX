@@ -1,10 +1,10 @@
 Package: readSX
 Title: Read SurveyXact Data into R
-Version: 0.7.0
+Version: 0.8.0
 Authors@R: 
     person("Stephan", "Daus", , "stephus.daus@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-0230-6997"))
-Description: What the package does (one paragraph).
+Description: Imports data from the SurveyXact service, dealing with labels correctly.
 License: MIT + file LICENSE
 Imports:
     dplyr,
@@ -14,6 +14,7 @@ Imports:
     purrr,
     readxl,
     rlang,
+    fs,
     vctrs,
     tidyselect
 Suggests: 
@@ -21,6 +22,6 @@ Suggests:
 Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.0
+RoxygenNote: 7.2.1
 URL: https://github.com/sda030/readSX
 BugReports: https://github.com/sda030/readSX/issues

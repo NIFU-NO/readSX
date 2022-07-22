@@ -6,7 +6,15 @@
 \alias{readSX-package}
 \title{readSX: Read SurveyXact Data into R}
 \description{
-What the package does (one paragraph).
+Imports data from the SurveyXact service, dealing with labels correctly.
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/sda030/readSX}
+  \item Report bugs at \url{https://github.com/sda030/readSX/issues}
+}
+
 }
 \author{
 \strong{Maintainer}: Stephan Daus \email{stephus.daus@gmail.com} (\href{https://orcid.org/0000-0003-0230-6997}{ORCID})

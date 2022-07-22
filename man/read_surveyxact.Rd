@@ -31,11 +31,11 @@ further processing.
 }
 \examples{
 dataset <- system.file("extdata", "ex_survey2_tab_utf16", "dataset.csv",
-                      package = "surveyreport", mustWork = TRUE)
+                      package = "readSX", mustWork = TRUE)
 labels <- system.file("extdata", "ex_survey2_tab_utf16", "labels.csv",
-  					  package = "surveyreport", mustWork = TRUE)
+  					  package = "readSX", mustWork = TRUE)
 structure <- system.file("extdata", "ex_survey2_tab_utf16", "structure.csv",
- 						 package = "surveyreport", mustWork = TRUE)
+ 						 package = "readSX", mustWork = TRUE)
 ex_survey2_tab_utf16 <-
 	read_surveyxact(filepath=c(dataset = dataset,
 						   labels = labels,
