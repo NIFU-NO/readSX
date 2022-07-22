@@ -7,8 +7,7 @@
 read_surveyxact(
   filepath = c(dataset = "dataset.csv", structure = "structure.csv", labels =
     "labels.csv"),
-  remove_whitespace = FALSE,
-  col_select = NULL
+  remove_whitespace = FALSE
 )
 }
 \arguments{
@@ -16,11 +15,9 @@ read_surveyxact(
 
 \item{remove_whitespace}{Logical, default is FALSE. Whether to remove
 leading and ending whitespace from all files.}
-
-\item{col_select}{unquoted columns to be selected. Takes tidyselect syntax.}
 }
 \value{
-tibble
+data.frame.
 }
 \description{
 First export the data from SurveyXact either as Excel or a set of CSV-files
