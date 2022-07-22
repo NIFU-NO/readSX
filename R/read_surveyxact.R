@@ -9,18 +9,12 @@
 #' @param filepath A character string with a path to an Excel file, or a character vector with paths to the dataset.csv, structure.csv and labels.csv-files.
 #' @param remove_whitespace Logical, default is FALSE. Whether to remove
 #'     leading and ending whitespace from all files.
-#' @param col_select unquoted columns to be selected. Takes tidyselect syntax.
 #'
-#' @return tibble
-#' @importFrom purrr map reduce
-#' @importFrom rlang abort set_names .data inform warn
+#' @return data.frame.
+#' @importFrom rlang abort set_names .data inform warn enquo is_installed
 #' @importFrom readxl excel_sheets read_excel
 #' @importFrom utils read.delim
-#' @importFrom vctrs vec_is
-#' @importFrom fs as_fs_path
 #' @importFrom labelled set_variable_labels set_value_labels val_labels
-#' @importFrom dplyr tibble select enquo
-#' @importFrom tidyselect eval_select
 #' @export
 #'
 #' @examples
@@ -42,17 +36,20 @@ read_surveyxact <-
 	function(filepath=c(dataset="dataset.csv",
 						structure ="structure.csv",
 						labels="labels.csv"),
-			 remove_whitespace=FALSE, col_select=NULL) {
+						# setclass = "data.frame",
+						remove_whitespace=FALSE
+						# col_select=NULL
+			 ) {
 
-		if(!(vctrs::vec_is(x = filepath, ptype = character()) || vctrs::vec_is(x = filepath, ptype = fs::as_fs_path()))) {
+		if(!inherits(x = filepath, what = "character")) {
 		  rlang::abort("filepath must be of type `character` or `fs_path`")
 		}
 		if(length(filepath)==1L && grepl(".xlsx", filepath)) {
 			df_data <- grep("Dataset\\(*1*\\)*.*", readxl::excel_sheets(filepath), value = TRUE)
-			df_data <- purrr::map(.x = df_data,
+			df_data <- map(.x = df_data,
 								  .f = ~readxl::read_excel(path = filepath, guess_max = 10000L,
 								  						 sheet=.x, trim_ws = remove_whitespace))
-			df_data <- purrr::reduce(df_data, cbind)
+			df_data <- reduce(df_data, cbind)
 			df_data <- as.data.frame(df_data)
 
 			df_vars <-  readxl::read_excel(path = filepath, sheet="Structure",
@@ -135,7 +132,7 @@ read_surveyxact <-
 		df_vars <- rlang::set_names(x = df_vars[["questionText"]], nm = df_vars[["variableName"]])
 		df_vars <- as.list(df_vars)
 		df_labels <- split(x = df_labels, f = df_labels[["variableName"]])
-		df_labels <- purrr::map(.x = df_labels, .f = function(x) {
+		df_labels <- map(.x = df_labels, .f = function(x) {
 			rlang::set_names(x = x$value, nm = x$valueLabel)
 		})
 
@@ -144,20 +141,39 @@ read_surveyxact <-
 
 
 		unmatched <- c()
-		for(i in names(df_labels)) {
-			if(i %in% colnames(df_data)) {
+		for (i in names(df_labels)) {
+			if (i %in% colnames(df_data)) {
 				labelled::val_labels(df_data[,i]) <- df_labels[[i]]
 			} else unmatched <- c(unmatched, i)
 		}
-		if(length(unmatched)>0L) rlang::warn(c(x="Unable to find following Labels-variables in Dataset-variables:",
+		if (length(unmatched)>0L) rlang::warn(c(x="Unable to find following Labels-variables in Dataset-variables:",
 											   rlang::expr_text(unmatched)))
 
-		col_select <- rlang::enquo(col_select)
-		if(!rlang::quo_is_null(col_select)) {
-			pos <- tidyselect::eval_select(col_select, df_data)
-			df_data <- rlang::set_names(df_data[pos], names(pos))
-		}
-		dplyr::as_tibble(df_data)
+		# col_select <- rlang::enquo(col_select)
+		# if (!rlang::quo_is_null(col_select)) {
+		# 	pos <- tidyselect::eval_select(col_select, df_data)
+		# 	df_data <- rlang::set_names(df_data[pos], names(pos))
+		# }
+		# if (any(c("tbl_df", "tbl", "tibble") %in% setclass)) {
+		#   if (rlang::is_installed("tibble")) {
+		#     tibble::as_tibble(df_data)
+		#   } else {
+		#     rlang::warn(paste0("tibble is requested but tibble-package is not installed. Returning data.frame."))
+		#     df_data
+		#   }
+		# } else df_data
+		df_data
 	}
 
+map <- function(.x, .f, ...) {
+  .f <- as_function(.f, env = global_env())
+  lapply(.x, .f, ...)
+}
+
+
+
+reduce <- function(.x, .f, ..., .init) {
+  f <- function(x, y) .f(x, y, ...)
+  Reduce(f, .x, init = .init)
+}
 

@@ -32,3 +32,9 @@ ex_survey2_xlsx <-
                       system.file("extdata", "ex_survey2.xlsx",
                       package = "readSX", mustWork = TRUE))
 ```
+
+## Future work
+
+-   Currently 17 total imports (including nested), all of which are
+    tidyverse, or r-lib.
+-   Will attempt to reduce reliance on labelled package
