@@ -43,7 +43,9 @@ read_surveyxact <-
 						labels="labels.csv"),
 			 remove_whitespace=FALSE, col_select=NULL) {
 
-		vctrs::vec_assert(x = filepath, ptype = character())
+		if(!(vctrs::vec_is(x = filepath, ptype = character()) || vctrs::vec_is(x = filepath, ptype = fs::as_fs_path()))) {
+		  rlang::abort("filepath must be of type `character` or `fs_path`")
+		}
 		if(length(filepath)==1L && grepl(".xlsx", filepath)) {
 			df_data <- grep("Dataset\\(*1*\\)*.*", readxl::excel_sheets(filepath), value = TRUE)
 			df_data <- purrr::map(.x = df_data,
