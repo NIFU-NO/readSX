@@ -4,9 +4,9 @@
 \name{readSX-package}
 \alias{readSX}
 \alias{readSX-package}
-\title{readSX: Read SurveyXact Data into R}
+\title{readSX: Read 'SurveyXact' Data}
 \description{
-Imports data from the SurveyXact commercial service. It adds variable labels and value labels, which should be converted to e.g. factors with labelled::to_factor().
+Imports data from the 'SurveyXact' commercial service\url{https://www.surveyxact.com/}. It adds variable labels and value labels, which should be converted to e.g. factors with labelled::to_factor().
 }
 \seealso{
 Useful links:
