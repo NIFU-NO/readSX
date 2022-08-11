@@ -4,7 +4,7 @@ Version: 0.8.1
 Authors@R: 
     person("Stephan", "Daus", , "stephus.daus@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-0230-6997"))
-Description: Imports data from the 'SurveyXact' commercial service<https://www.surveyxact.com/>. It adds variable labels and value labels, which should be converted to e.g. factors with labelled::to_factor().
+Description: Imports data from the 'SurveyXact' commercial service <https://www.surveyxact.com/>. It adds variable labels and value labels, which should be converted to e.g. factors with labelled::to_factor().
 License: MIT + file LICENSE
 Imports:
     labelled,
