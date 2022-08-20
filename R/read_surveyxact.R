@@ -14,7 +14,7 @@
 #' @importFrom rlang abort set_names .data inform warn enquo is_installed
 #' @importFrom readxl excel_sheets read_excel
 #' @importFrom utils read.delim
-#' @importFrom labelled set_variable_labels set_value_labels val_labels
+#' @importFrom labelled val_labels
 #' @export
 #'
 #' @examples
@@ -33,9 +33,10 @@
 #'							   labels = labels,
 #'							   structure = structure))
 read_surveyxact <-
-	function(filepath=c(dataset="dataset.csv",
-						structure ="structure.csv",
-						labels="labels.csv"),
+	function(filepath =
+	           c(dataset="dataset.csv",
+						   structure = "structure.csv",
+						   labels="labels.csv"),
 						# setclass = "data.frame",
 						remove_whitespace=FALSE
 						# col_select=NULL
@@ -44,7 +45,9 @@ read_surveyxact <-
 		if(!inherits(x = filepath, what = "character")) {
 		  rlang::abort("filepath must be of type `character` or `fs_path`")
 		}
-		if(length(filepath)==1L && grepl(".xlsx", filepath)) {
+		if(length(filepath)==1L && grepl("\\.xlsx", filepath, ignore.case = TRUE)) {
+
+
 			df_data <- grep("Dataset\\(*1*\\)*.*", readxl::excel_sheets(filepath), value = TRUE)
 			df_data <- map(.x = df_data,
 								  .f = ~readxl::read_excel(path = filepath, guess_max = 10000L,
@@ -60,19 +63,31 @@ read_surveyxact <-
 															 trim_ws = remove_whitespace))
 			df_labels <- as.data.frame(df_labels)
 			colnames(df_labels) <- c("variableName", "value", "valueLabel")
-		} else if(length(filepath)==3L && all(grepl(".csv", filepath))) {
 
-			if(all(tolower(names(filepath)) %in% c("dataset", "structure", "labels"))) {
+
+		} else if(length(filepath)==3L && all(grepl("\\.csv", filepath, ignore.case = TRUE))) {
+
+		  if(!is.null(names(filepath))) {
+		    names(filepath) <- tolower(names(filepath))
+		  }
+
+			if(!is.null(names(filepath)) &&
+			   all(names(filepath) %in% c("dataset", "structure", "labels"))) {
 
 				df_data <- filepath[names(filepath)=="dataset"]
 				df_vars <- filepath[names(filepath)=="structure"]
 				df_labels <- filepath[names(filepath)=="labels"]
 
 			} else if(is.null(names(filepath))) {
-				rlang::inform("`filepath` is an unnamed character vector, guessing which is which from filenames.")
-				df_data <- grep("dataset.csv", filepath, fixed = TRUE, value = TRUE)
-				df_vars <- grep("structure.csv", filepath, fixed = TRUE, value = TRUE)
-				df_labels <- grep("labels.csv", filepath, fixed = TRUE, value = TRUE)
+				rlang::inform(message =
+				                c("`filepath` is an unnamed character vector.",
+				                  i="Guessing roles from filenames..."))
+				df_data <- grep("dataset\\.csv", filepath, ignore.case = TRUE, value = TRUE)
+				df_vars <- grep("structure\\.csv", filepath, ignore.case = TRUE, value = TRUE)
+				df_labels <- grep("labels\\.csv", filepath, ignore.case = TRUE, value = TRUE)
+				if(any(nchar(c(df_data, df_vars, df_labels))==0)) {
+				  rlang::abort("Failed to guess roles from filenames")
+				}
 			}
 
 			df_data <-
@@ -102,8 +117,10 @@ read_surveyxact <-
 								  col.names = c("variableName", "value", "valueLabel"))
 
 		} else rlang::abort(c("Invalid filepath:",
-							  i="`filepath` must be either a string pointing to an xlsx-file, or",
-							  i="a named character vector of length 3 pointing to three CSV-files dataset.csv, structure.csv and labels.csv.",
+							  i="`filepath` must be either:",
+							  i="1) a string pointing to an xlsx-file,",
+							  i="2) a character vector of length 3 with the names c('dataset', 'labels', 'structure'), or",
+							  i="3) a character vector of length 3 with CSV-files dataset.csv, structure.csv and labels.csv.",
 							  x=paste0("`filepath` is currently a ", class(filepath)[1], " of length ", paste0(length(filepath), collapse=","))))
 
 		if(any(!c("variableName", "questionText") %in% colnames(df_vars))) {
@@ -129,25 +146,34 @@ read_surveyxact <-
 											yes = paste(df_vars[["questionText"]], df_vars[["choiceText"]], sep=" - "),
 											no = df_vars[["questionText"]])
 
-		df_vars <- rlang::set_names(x = df_vars[["questionText"]], nm = df_vars[["variableName"]])
+		df_vars <- rlang::set_names(x = df_vars[["questionText"]],
+		                            nm = df_vars[["variableName"]])
 		df_vars <- as.list(df_vars)
 		df_labels <- split(x = df_labels, f = df_labels[["variableName"]])
 		df_labels <- map(.x = df_labels, .f = function(x) {
 			rlang::set_names(x = x$value, nm = x$valueLabel)
 		})
 
-		df_data <- labelled::set_variable_labels(df_data, .labels = df_vars, .strict = FALSE)
-
+		# df_data <- labelled::set_variable_labels(df_data, .labels = df_vars, .strict = FALSE)
+		for (i in names(df_vars) ) {
+		    attr(x = df_data[[i]], which = "label") <- df_vars[[i]]
+		}
 
 
 		unmatched <- c()
 		for (i in names(df_labels)) {
 			if (i %in% colnames(df_data)) {
-				labelled::val_labels(df_data[,i]) <- df_labels[[i]]
-			} else unmatched <- c(unmatched, i)
+				# labelled::val_labels(df_data[,i]) <- df_labels[[i]]
+				df_data[,i] <- factor(df_data[,i], labels = names(df_labels[[i]]),
+				                      levels = unname(df_labels[[i]]))
+			} else {
+			  unmatched <- c(unmatched, i)
+			}
 		}
-		if (length(unmatched)>0L) rlang::warn(c(x="Unable to find following Labels-variables in Dataset-variables:",
+		if (length(unmatched) > 0L) {
+		  rlang::warn(c(x="Unable to find following Labels-variables in Dataset-variables:",
 											   rlang::expr_text(unmatched)))
+		}
 
 		# col_select <- rlang::enquo(col_select)
 		# if (!rlang::quo_is_null(col_select)) {

@@ -1,3 +1,4 @@
-# readSX 0.8.1
+# readSX 0.8.2
 
-* Release version
+* Release version.
+* Reduced dependence on labelled-package.
