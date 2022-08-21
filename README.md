@@ -9,12 +9,20 @@
 experimental](https://lifecycle.r-lib.org/articles/figures/lifecycle-stable.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/readSX)](https://CRAN.R-project.org/package=readSX)
+[![R-CMD-check](https://github.com/sda030/readSX/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/sda030/readSX/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/sda030/readSX/branch/main/graph/badge.svg)](https://app.codecov.io/gh/sda030/readSX?branch=main)
 <!-- badges: end -->
 
 The goal of readSX is to import survey data collected from the
-proprietary service SurveyXact.
+proprietary service SurveyXact. SurveyXact exports data in multiple
+tables: raw data, variable labels (and types), and value labels.
 
 ## Installation
+
+``` r
+install.packages("readSX")
+```
 
 You can install the development version of readSX like so:
 
@@ -33,8 +41,15 @@ ex_survey2_xlsx <-
                       package = "readSX", mustWork = TRUE))
 ```
 
-## Future work
+## Features
 
--   Currently 17 total imports (including nested), all of which are
-    tidyverse, or r-lib.
--   Will attempt to reduce reliance on labelled package
+-   Fixes legacy bugs in the SurveyXact data export.
+-   Ensures data can be read no matter which data export format (Excel,
+    CSV, ansi/utf8, comma/semicolon-separated).
+-   Can read non-ASCII characters correctly - tested with Norwegian æøå.
+-   As of version 1.8.2, applies factors for labelled values. (prior
+    versions used the value labels-system of the labelled-package, which
+    is only intended for Stata/SPSS/SAS where there can be multiple
+    missing value codes). In SurveyXact, only blanks can be used for
+    explicit missing, so this feature was redundant and confusing. Stick
+    to R’s native factor vectors.
