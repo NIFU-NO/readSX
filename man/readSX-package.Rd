@@ -12,6 +12,7 @@ Imports data from the 'SurveyXact' commercial service \url{https://www.surveyxac
 Useful links:
 \itemize{
   \item \url{https://github.com/sda030/readSX}
+  \item \url{https://sda030.github.io/readSX/}
   \item Report bugs at \url{https://github.com/sda030/readSX/issues}
 }
 
