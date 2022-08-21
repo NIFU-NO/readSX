@@ -194,7 +194,7 @@ read_surveyxact <-
     #   if (rlang::is_installed("tibble")) {
     #     tibble::as_tibble(df_data)
     #   } else {
-    #     cli::cli_warn(paste0("tibble is requested but tibble-package is not installed. Returning data.frame."))
+    #     cli::cli_warn("tibble is requested but tibble-package is not installed. Returning data.frame.")
     #     df_data
     #   }
     # } else df_data

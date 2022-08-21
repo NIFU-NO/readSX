@@ -30,7 +30,6 @@ check_filepath <- function(filepath = filepath) {
     names(filepath) <- "excel"
     return(filepath)
   }
-
   if (length(filepath) == 3L && all(grepl("\\.csv", filepath, ignore.case = TRUE))) {
     if (!is.null(names(filepath)) &&
       all(names(filepath) %in% csv_names)) {
