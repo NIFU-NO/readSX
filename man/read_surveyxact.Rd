@@ -7,13 +7,13 @@
 read_surveyxact(
   filepath = c(dataset = "dataset.csv", structure = "structure.csv", labels =
     "labels.csv"),
-  remove_whitespace = FALSE
+  trim_ws = FALSE
 )
 }
 \arguments{
 \item{filepath}{A character string with a path to an Excel file, or a character vector with paths to the dataset.csv, structure.csv and labels.csv-files.}
 
-\item{remove_whitespace}{Logical, default is FALSE. Whether to remove
+\item{trim_ws}{Logical, default is FALSE. Whether to remove
 leading and ending whitespace from all files.}
 }
 \value{
@@ -28,13 +28,18 @@ further processing.
 }
 \examples{
 dataset <- system.file("extdata", "ex_survey2_tab_utf16", "dataset.csv",
-                      package = "readSX", mustWork = TRUE)
+  package = "readSX", mustWork = TRUE
+)
 labels <- system.file("extdata", "ex_survey2_tab_utf16", "labels.csv",
-  					  package = "readSX", mustWork = TRUE)
+  package = "readSX", mustWork = TRUE
+)
 structure <- system.file("extdata", "ex_survey2_tab_utf16", "structure.csv",
- 						 package = "readSX", mustWork = TRUE)
+  package = "readSX", mustWork = TRUE
+)
 ex_survey2_tab_utf16 <-
-	read_surveyxact(filepath=c(dataset = dataset,
-						   labels = labels,
-						   structure = structure))
+  read_surveyxact(filepath = c(
+    dataset = dataset,
+    labels = labels,
+    structure = structure
+  ))
 }

@@ -2,7 +2,8 @@
 
 export(read_surveyxact)
 import(rlang)
-importFrom(labelled,val_labels)
+importFrom(cli,cli_abort)
+importFrom(cli,cli_warn)
 importFrom(readxl,excel_sheets)
 importFrom(readxl,read_excel)
 importFrom(rlang,.data)
