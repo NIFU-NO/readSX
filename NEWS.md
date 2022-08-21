@@ -1,4 +1,4 @@
-# readSX 0.8.2
+# readSX 0.8.3
 
 * CRAN release version.
 * Removed dependence on labelled-package.

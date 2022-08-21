@@ -10,7 +10,6 @@ check_filepath(filepath = filepath)
 \item{filepath}{Character vector of filepaths to check.}
 }
 \value{
-<<<<<<< HEAD
 filepath as a named character vector
 }
 \description{
