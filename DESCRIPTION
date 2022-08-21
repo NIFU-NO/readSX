@@ -8,8 +8,8 @@ Authors@R:
            email = "stephus.daus@gmail.com", 
            comment = c(ORCID = "0000-0003-0230-6997"))
 Description: Imports data from the 'SurveyXact' commercial service 
-    <https://www.surveyxact.com/>. It adds variable labels, and converts value 
-    labels to factors in the same order as exported from the SurveyXact system.
+    <https://www.surveyxact.com/>, adds variable labels, and converts value 
+    labels to factors in the same order as exported from 'SurveyXact'.
 License: MIT + file LICENSE
 Imports:
     cli,
