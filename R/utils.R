@@ -3,7 +3,7 @@
 #'
 #' @param filepath Character vector of filepaths to check.
 #' @importFrom cli cli_abort cli_warn
-#' @importFrom rlang set_names
+#' @importFrom rlang set_names global_env as_function
 #' @return filepath as a named character vector
 #'
 check_filepath <- function(filepath = filepath) {
@@ -71,7 +71,7 @@ check_filepath <- function(filepath = filepath) {
 
 
 map <- function(.x, .f, ...) {
-  .f <- as_function(.f, env = global_env())
+  .f <- rlang::as_function(.f, env = rlang::global_env())
   lapply(.x, .f, ...)
 }
 

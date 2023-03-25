@@ -6,7 +6,7 @@
 <!-- badges: start -->
 
 [![Lifecycle:
-experimental](https://lifecycle.r-lib.org/articles/figures/lifecycle-stable.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+stable](https://lifecycle.r-lib.org/articles/figures/lifecycle-stable.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/readSX)](https://CRAN.R-project.org/package=readSX)
 [![R-CMD-check](https://github.com/sda030/readSX/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/sda030/readSX/actions/workflows/R-CMD-check.yaml)
@@ -43,13 +43,24 @@ ex_survey2_xlsx <-
 
 ## Features
 
--   Fixes legacy bugs in the SurveyXact data export.
--   Ensures data can be read no matter which data export format (Excel,
-    CSV, ansi/utf8, comma/semicolon-separated).
--   Can read non-ASCII characters correctly - tested with Norwegian æøå.
--   As of version 1.8.2, applies factors for labelled values. (prior
-    versions used the value labels-system of the labelled-package, which
-    is only intended for Stata/SPSS/SAS where there can be multiple
-    missing value codes). In SurveyXact, only blanks can be used for
-    explicit missing, so this feature was redundant and confusing. Stick
-    to R’s native factor vectors.
+- Fixes legacy bugs in the SurveyXact data export.
+- Ensures data can be read no matter which data export format (Excel,
+  CSV, ansi/utf8, comma/semicolon-separated).
+- Can read non-ASCII characters correctly - tested with Norwegian æøå.
+- As of version 1.8.2, applies factors for labelled values. (prior
+  versions used the value labels-system of the labelled-package, which
+  is only intended for Stata/SPSS/SAS where there can be multiple
+  missing value codes). In SurveyXact, only blanks can be used for
+  explicit missing, so this feature was redundant and confusing. Stick
+  to R’s native factor vectors.
+- As of 1.8.4, contains function to ensure uploaded CSV file with
+  respondents is in correct format.
+
+## TODO:
+
+- Tick boxes do not get correct label suffix? Automatically fix NA/FALSE
+  for these?
+- Get SX to fix the bug in labels header
+- Get SX to fix the bug in Excel-sheets being separated into
+  dataset(1)(2), etc.
+- Get SX to fix bug in Structure.csv having a phantom column at the end…
