@@ -12,6 +12,7 @@
 #' \dontrun{write_data_for_sx(mtcars, filepath="test.csv")}
 write_data_for_sx <- function(data, filepath, overwrite = FALSE) {
   if(!overwrite && file.exists(filepath)) cli::cli_abort("{.arg filepath} {.path {filepath}} already exists. Consider `overwrite = FALSE`")
+  col_names <- colnames(data)
   data <- data
   data_list <- lapply(names(data), function(col) {
     if(is.character(data[[col]]) || is.factor(data[[col]])) {
@@ -19,7 +20,8 @@ write_data_for_sx <- function(data, filepath, overwrite = FALSE) {
     }
     data[[col]]
     })
-  data <- cbind(data_list)
+  data <- as.data.frame(data_list)
+  colnames(data) <- col_names
 
   write.table(x = data, quote = FALSE, sep = "\t", na = "", row.names = F,
               col.names = TRUE, fileEncoding = "UTF-16LE",
