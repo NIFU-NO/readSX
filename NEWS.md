@@ -1,3 +1,6 @@
+# readSX 0.8.5
+* Minor fix for CRAN
+
 # readSX 0.8.4
 
 * Added wrapper function write_data_for_sx() for easily importing respondent lists into SurveyXact.
