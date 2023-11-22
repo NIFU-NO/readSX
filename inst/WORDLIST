@@ -3,6 +3,7 @@ Codecov
 Filepath
 Lifecycle
 ORCID
+SX
 Stata
 SurveyXact
 ansi
@@ -13,5 +14,7 @@ labelled
 readme
 rlang
 sep
+sx
+tibble
 utf
 æøå
