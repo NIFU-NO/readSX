@@ -89,24 +89,36 @@ read_surveyxact <-
       df_data <-
         utils::read.delim(
           file = filepath["dataset"],
-          header = TRUE, sep = "\t", quote = '\"',
-          row.names = NULL, stringsAsFactors = FALSE,
-          fileEncoding = "UTF-16", na.strings = c(NA, ""),
-          strip.white = trim_ws
+          header = TRUE,
+          sep = "\t",
+          quote = '\"',
+          row.names = NULL,
+          stringsAsFactors = FALSE,
+          fileEncoding = "UTF-16",
+          na.strings = c(NA, ""),
+          strip.white = trim_ws,
+          blank.lines.skip = TRUE,
+          skipNul = TRUE
         )
 
       df_vars <-
         suppressWarnings(
           utils::read.delim(
             file = filepath["structure"],
-            header = TRUE, sep = "\t", quote = '\"',
-            row.names = NULL, stringsAsFactors = FALSE,
-            fileEncoding = "UTF-16", na.strings = c(NA, ""),
+            header = TRUE,
+            sep = "\t",
+            quote = '\"',
+            row.names = NULL,
+            stringsAsFactors = FALSE,
+            fileEncoding = "UTF-16",
+            na.strings = c(NA, ""),
             strip.white = trim_ws,
             col.names = c(
               "questionName", "variableName", "questionType",
               "subType", "questionText", "choiceValue", "choiceText", "remove"
-            )
+            ),
+            blank.lines.skip = TRUE,
+            skipNul = TRUE
           )
         )
       df_vars$remove <- NULL # Bug in export function at SurveyXact.com leaves redundant empty column
@@ -114,11 +126,17 @@ read_surveyxact <-
       df_labels <-
         utils::read.delim(
           file = filepath["labels"],
-          header = FALSE, sep = "\t", quote = '\"',
-          row.names = NULL, stringsAsFactors = FALSE,
-          fileEncoding = "UTF-16", na.strings = c(NA, ""),
+          header = FALSE,
+          sep = "\t",
+          quote = '\"',
+          row.names = NULL,
+          stringsAsFactors = FALSE,
+          fileEncoding = "UTF-16",
+          na.strings = c(NA, ""),
           strip.white = trim_ws,
-          col.names = c("variableName", "value", "valueLabel")
+          col.names = c("variableName", "value", "valueLabel"),
+          blank.lines.skip = TRUE,
+          skipNul = TRUE
         )
     }
 
