@@ -1,3 +1,8 @@
+# readSX 0.8.6
+* Internal refactoring to reduce duplication.
+* Updated roxygen2 to 7.3.0.
+* Minor CRAN fixes for Mac M1.
+
 # readSX 0.8.5
 * Minor fix for CRAN
 
