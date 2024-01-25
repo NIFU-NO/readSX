@@ -20,5 +20,5 @@ Side-effect: writes file. Returns filepath.
 Writes Data with Respondents in CSV Format Required for SurveyXact Import
 }
 \examples{
-\dontrun{write_data_for_sx(mtcars, filepath="test.csv")}
+write_data_for_sx(mtcars, filepath=tempfile(fileext = ".csv"))
 }

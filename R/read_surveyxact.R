@@ -6,7 +6,9 @@
 #'     labelled-package or other functions in this package for
 #'     further processing.
 #'
-#' @param filepath A character string with a path to an Excel file, or a character vector with paths to the dataset.csv, structure.csv and labels.csv-files.
+#' @param filepath A character string with a path to an Excel file, or a
+#'     character vector with paths to the dataset.csv, structure.csv and
+#'     labels.csv-files.
 #' @param trim_ws Logical, default is FALSE. Whether to remove
 #'     leading and ending whitespace from all files.
 #'
@@ -86,26 +88,13 @@ read_surveyxact <-
     } else if (length(filepath) == 3L &&
       all(names(filepath) %in% c("dataset", "structure", "labels"))) {
 
-      df_data <-
-        utils::read.delim(
-          file = filepath["dataset"],
-          header = TRUE,
-          sep = "\t",
-          quote = '\"',
-          row.names = NULL,
-          stringsAsFactors = FALSE,
-          fileEncoding = "UTF-16",
-          na.strings = c(NA, ""),
-          strip.white = trim_ws,
-          blank.lines.skip = TRUE,
-          skipNul = TRUE
-        )
-
-      df_vars <-
+      read_surveyxact_csv <- function(file,
+                                      header,
+                                      col_names) {
         suppressWarnings(
           utils::read.delim(
-            file = filepath["structure"],
-            header = TRUE,
+            file = file,
+            header = header,
             sep = "\t",
             quote = '\"',
             row.names = NULL,
@@ -113,30 +102,38 @@ read_surveyxact <-
             fileEncoding = "UTF-16",
             na.strings = c(NA, ""),
             strip.white = trim_ws,
-            col.names = c(
-              "questionName", "variableName", "questionType",
-              "subType", "questionText", "choiceValue", "choiceText", "remove"
-            ),
+            col.names = col_names,
             blank.lines.skip = TRUE,
             skipNul = TRUE
           )
         )
+
+      }
+
+
+
+      df_data <-
+        read_surveyxact_csv(
+          file = filepath["dataset"],
+          header = TRUE
+        )
+
+      df_vars <-
+        read_surveyxact_csv(
+            file = filepath["structure"],
+            header = TRUE,
+            col_names = c(
+              "questionName", "variableName", "questionType",
+              "subType", "questionText", "choiceValue", "choiceText", "remove"
+            )
+          )
       df_vars$remove <- NULL # Bug in export function at SurveyXact.com leaves redundant empty column
 
       df_labels <-
-        utils::read.delim(
+        read_surveyxact_csv(
           file = filepath["labels"],
           header = FALSE,
-          sep = "\t",
-          quote = '\"',
-          row.names = NULL,
-          stringsAsFactors = FALSE,
-          fileEncoding = "UTF-16",
-          na.strings = c(NA, ""),
-          strip.white = trim_ws,
-          col.names = c("variableName", "value", "valueLabel"),
-          blank.lines.skip = TRUE,
-          skipNul = TRUE
+          col_names = c("variableName", "value", "valueLabel")
         )
     }
 
