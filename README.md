@@ -12,6 +12,8 @@ status](https://www.r-pkg.org/badges/version/readSX)](https://CRAN.R-project.org
 [![R-CMD-check](https://github.com/sda030/readSX/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/sda030/readSX/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/sda030/readSX/branch/main/graph/badge.svg)](https://app.codecov.io/gh/sda030/readSX?branch=main)
+[![Codecov test
+coverage](https://codecov.io/gh/sda030/readSX/graph/badge.svg)](https://app.codecov.io/gh/sda030/readSX)
 <!-- badges: end -->
 
 The goal of readSX is to import survey data collected from the
@@ -28,7 +30,7 @@ You can install the development version of readSX like so:
 
 ``` r
 library(devtools)
-devtools::install_github("sda030/readSX")
+devtools::install_github("NIFU-NO/readSX")
 ```
 
 ## Example

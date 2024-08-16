@@ -20,6 +20,7 @@ knitr::opts_chunk$set(
 [![CRAN status](https://www.r-pkg.org/badges/version/readSX)](https://CRAN.R-project.org/package=readSX)
 [![R-CMD-check](https://github.com/sda030/readSX/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/sda030/readSX/actions/workflows/R-CMD-check.yaml)
 [![Codecov test coverage](https://codecov.io/gh/sda030/readSX/branch/main/graph/badge.svg)](https://app.codecov.io/gh/sda030/readSX?branch=main)
+[![Codecov test coverage](https://codecov.io/gh/sda030/readSX/graph/badge.svg)](https://app.codecov.io/gh/sda030/readSX)
 <!-- badges: end -->
 
 The goal of readSX is to import survey data collected from the proprietary service SurveyXact. SurveyXact exports data in multiple tables: raw data, variable labels (and types), and value labels. 

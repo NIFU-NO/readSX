@@ -11,7 +11,9 @@ read_surveyxact(
 )
 }
 \arguments{
-\item{filepath}{A character string with a path to an Excel file, or a character vector with paths to the dataset.csv, structure.csv and labels.csv-files.}
+\item{filepath}{A character string with a path to an Excel file, or a
+character vector with paths to the dataset.csv, structure.csv and
+labels.csv-files.}
 
 \item{trim_ws}{Logical, default is FALSE. Whether to remove
 leading and ending whitespace from all files.}
