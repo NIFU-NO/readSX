@@ -11,9 +11,9 @@ Imports data from the 'SurveyXact' commercial service \url{https://rambollxact.c
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/sda030/readSX}
-  \item \url{https://sda030.github.io/readSX/}
-  \item Report bugs at \url{https://github.com/sda030/readSX/issues}
+  \item \url{https://github.com/NIFU-NO/readSX}
+  \item \url{https://NIFU-NO.github.io/readSX/}
+  \item Report bugs at \url{https://github.com/NIFU-NO/readSX/issues}
 }
 
 }

@@ -8,5 +8,5 @@ testthat::test_that("write_data_for_sx", {
     readSX::write_data_for_sx(mtcars,
                     filepath = tmpfile),
   regexp = "already exists\\. Consider `overwrite = FALSE`")
-  file.remove(tmpfile)
+  unlink(tmpfile)
 })
