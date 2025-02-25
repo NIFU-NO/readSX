@@ -9,7 +9,9 @@
 #' @export
 #'
 #' @examples
-#' write_data_for_sx(mtcars, filepath=tempfile(fileext = ".csv"))
+#' tmpfile <- tempfile(fileext = ".csv")
+#' write_data_for_sx(mtcars, filepath=tmpfile)
+#' unlink(tmpfile)
 write_data_for_sx <- function(data, filepath, overwrite = FALSE) {
   if(!overwrite && file.exists(filepath)) {
     cli::cli_abort("{.arg filepath} {.path {filepath}} already exists. Consider `overwrite = FALSE`")

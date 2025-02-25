@@ -26,11 +26,11 @@ check_filepath <- function(filepath = filepath) {
     names(filepath) <- tolower(names(filepath))
   }
 
-  if (length(filepath) == 1L && grepl("\\.xlsx", filepath, ignore.case = TRUE)) {
+  if (length(filepath) == 1L && grepl("\\.xlsx$", filepath, ignore.case = TRUE)) {
     names(filepath) <- "excel"
     return(filepath)
   }
-  if (length(filepath) == 3L && all(grepl("\\.csv", filepath, ignore.case = TRUE))) {
+  if (length(filepath) == 3L && all(grepl("\\.csv$", filepath, ignore.case = TRUE))) {
     if (!is.null(names(filepath)) &&
       all(names(filepath) %in% csv_names)) {
       return(filepath)
@@ -44,9 +44,9 @@ check_filepath <- function(filepath = filepath) {
 
       filepath <-
         c(
-          grep("dataset\\.csv", filepath, ignore.case = TRUE, value = TRUE),
-          grep("structure\\.csv", filepath, ignore.case = TRUE, value = TRUE),
-          grep("labels\\.csv", filepath, ignore.case = TRUE, value = TRUE)
+          grep("dataset\\.csv$", filepath, ignore.case = TRUE, value = TRUE),
+          grep("structure\\.csv$", filepath, ignore.case = TRUE, value = TRUE),
+          grep("labels\\.csv$", filepath, ignore.case = TRUE, value = TRUE)
         )
       filepath <- rlang::set_names(filepath, csv_names)
 

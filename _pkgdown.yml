@@ -1,4 +1,5 @@
 url: https://NIFU-NO.github.io/readSX/
 template:
   bootstrap: 5
+  light-switch: true
 
