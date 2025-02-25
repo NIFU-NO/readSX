@@ -13,6 +13,7 @@ filepath
 labelled
 readme
 rlang
+roxygen
 sep
 sx
 tibble
