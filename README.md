@@ -9,7 +9,7 @@
 stable](https://lifecycle.r-lib.org/articles/figures/lifecycle-stable.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/readSX)](https://CRAN.R-project.org/package=readSX)
-[![R-CMD-check](https://github.com/sda030/readSX/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/sda030/readSX/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/NIFU-NO/readSX/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/NIFU-NO/readSX/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/sda030/readSX/branch/main/graph/badge.svg)](https://app.codecov.io/gh/sda030/readSX?branch=main)
 [![Codecov test
@@ -30,7 +30,7 @@ You can install the development version of readSX like so:
 
 ``` r
 library(devtools)
-devtools::install_github("NIFU-NO/readSX")
+devtools::install_github("sda030/readSX")
 ```
 
 ## Example
