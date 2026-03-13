@@ -145,16 +145,15 @@ testthat::test_that("Warns when Dataset has deleted columns", {
     mustWork = TRUE
   )
 
-  # Read original dataset and drop a column, write to temp file
-  tmp_dir <- tempdir()
+  # Create isolated temp directory with guaranteed cleanup
+  tmp_dir <- tempfile(pattern = "readSX_test_")
+  dir.create(tmp_dir)
+  on.exit(unlink(tmp_dir, recursive = TRUE), add = TRUE)
+
   tmp_dataset <- file.path(tmp_dir, "dataset.csv")
-  file.copy(dataset_path, tmp_dataset, overwrite = TRUE)
-  file.copy(labels_path, file.path(tmp_dir, "labels.csv"), overwrite = TRUE)
-  file.copy(
-    structure_path,
-    file.path(tmp_dir, "structure.csv"),
-    overwrite = TRUE
-  )
+  file.copy(dataset_path, tmp_dataset)
+  file.copy(labels_path, file.path(tmp_dir, "labels.csv"))
+  file.copy(structure_path, file.path(tmp_dir, "structure.csv"))
 
   # Read original, drop a column, re-write
   original <- utils::read.delim(
@@ -180,12 +179,18 @@ testthat::test_that("Warns when Dataset has deleted columns", {
     structure = file.path(tmp_dir, "structure.csv")
   )
 
-  testthat::expect_warning(
-    readSX::read_surveyxact(filepath = files),
-    regexp = "Structure-variables"
+  # Expect warnings for both Labels and Structure mismatches
+  warnings <- testthat::capture_warnings(
+    readSX::read_surveyxact(filepath = files)
   )
-
-  unlink(file.path(tmp_dir, c("dataset.csv", "labels.csv", "structure.csv")))
+  testthat::expect_true(
+    any(grepl("Labels-variables", warnings)),
+    info = "Expected warning about unmatched Labels-variables"
+  )
+  testthat::expect_true(
+    any(grepl("Structure-variables", warnings)),
+    info = "Expected warning about unmatched Structure-variables"
+  )
 })
 
 #

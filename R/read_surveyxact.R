@@ -207,9 +207,9 @@ read_surveyxact <-
     }
 
     unmatched_structure <- c()
-    for (nm in df_vars[["variableName"]]) {
+    for (nm in unique(df_vars[["variableName"]])) {
       if (nm %in% colnames(df_data)) {
-        label <- df_vars[df_vars[["variableName"]] == nm, "questionText"]
+        label <- df_vars[df_vars[["variableName"]] == nm, "questionText"][[1L]]
         attr(x = df_data[[nm]], which = "label") <- label
       } else {
         unmatched_structure <- c(unmatched_structure, nm)
