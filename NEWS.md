@@ -1,3 +1,9 @@
+# readSX 0.8.8
+* Fixed bug where `read_surveyxact()` would error if variables were manually deleted from the Dataset but still present in the Structure/Labels files. Now skips missing columns and warns.
+* Fixed typo in `write_data_for_sx()` error message (`overwrite = FALSE` -> `TRUE`).
+* Fixed malformed cli error message in `check_filepath()`.
+* Removed unused rlang imports.
+
 # readSX 0.8.7
 * Internal refactoring.
 * Tests explicitly remove temp files.

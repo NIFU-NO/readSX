@@ -1,9 +1,11 @@
 testthat::test_that(desc = "Read in XLSX", code = {
-  files <- system.file("extdata", "ex_survey2.xlsx",
-    package = "readSX", mustWork = TRUE
+  files <- system.file(
+    "extdata",
+    "ex_survey2.xlsx",
+    package = "readSX",
+    mustWork = TRUE
   )
   ex_survey2 <- readSX::read_surveyxact(filepath = files)
-
 
   ex_survey2_i_10a <-
     as.data.frame(table(ex_survey2[["i_10"]], useNA = "a"))
@@ -11,8 +13,11 @@ testthat::test_that(desc = "Read in XLSX", code = {
 
   truth <-
     readxl::read_excel(
-      path = system.file("extdata", "ex_survey2.xlsx",
-        package = "readSX", mustWork = TRUE
+      path = system.file(
+        "extdata",
+        "ex_survey2.xlsx",
+        package = "readSX",
+        mustWork = TRUE
       ),
       sheet = "Dataset"
     )
@@ -33,11 +38,12 @@ testthat::test_that(desc = "Read in XLSX", code = {
 testthat::test_that(desc = "Read in tab_utf16 CSV, unnamed filepaths", code = {
   files <- dir(
     full.names = TRUE,
-    path =
-      system.file("extdata",
-        "ex_survey2_tab_utf16",
-        package = "readSX", mustWork = TRUE
-      )
+    path = system.file(
+      "extdata",
+      "ex_survey2_tab_utf16",
+      package = "readSX",
+      mustWork = TRUE
+    )
   )
   testthat::expect_warning(
     {
@@ -53,8 +59,11 @@ testthat::test_that(desc = "Read in tab_utf16 CSV, unnamed filepaths", code = {
 
   truth <-
     readxl::read_excel(
-      path = system.file("extdata", "ex_survey2.xlsx",
-        package = "readSX", mustWork = TRUE
+      path = system.file(
+        "extdata",
+        "ex_survey2.xlsx",
+        package = "readSX",
+        mustWork = TRUE
       ),
       sheet = "Dataset"
     )
@@ -75,11 +84,12 @@ testthat::test_that(desc = "Read in tab_utf16 CSV, unnamed filepaths", code = {
 testthat::test_that(desc = "Read in tab_utf16 CSV, named filepaths", code = {
   files <- dir(
     full.names = TRUE,
-    path =
-      system.file("extdata",
-        "ex_survey2_tab_utf16",
-        package = "readSX", mustWork = TRUE
-      )
+    path = system.file(
+      "extdata",
+      "ex_survey2_tab_utf16",
+      package = "readSX",
+      mustWork = TRUE
+    )
   )
   names(files) <- c("dataset", "labels", "structure")
   ex_survey2 <- readSX::read_surveyxact(filepath = files)
@@ -90,8 +100,11 @@ testthat::test_that(desc = "Read in tab_utf16 CSV, named filepaths", code = {
 
   truth <-
     readxl::read_excel(
-      path = system.file("extdata", "ex_survey2.xlsx",
-        package = "readSX", mustWork = TRUE
+      path = system.file(
+        "extdata",
+        "ex_survey2.xlsx",
+        package = "readSX",
+        mustWork = TRUE
       ),
       sheet = "Dataset"
     )
@@ -104,6 +117,79 @@ testthat::test_that(desc = "Read in tab_utf16 CSV, named filepaths", code = {
   testthat::expect_equal(
     object = attr(ex_survey2[["i_10"]], "label"),
     expected = "I hvilken grad har du fått inspirasjon eller motivasjon til ditt valg av programområde/programfag fra følgende?  - Populærvitenskapelige bøker og blader"
+  )
+})
+
+
+################################################################################
+testthat::test_that("Warns when Dataset has deleted columns", {
+  dataset_path <- system.file(
+    "extdata",
+    "ex_survey2_tab_utf16",
+    "dataset.csv",
+    package = "readSX",
+    mustWork = TRUE
+  )
+  labels_path <- system.file(
+    "extdata",
+    "ex_survey2_tab_utf16",
+    "labels.csv",
+    package = "readSX",
+    mustWork = TRUE
+  )
+  structure_path <- system.file(
+    "extdata",
+    "ex_survey2_tab_utf16",
+    "structure.csv",
+    package = "readSX",
+    mustWork = TRUE
+  )
+
+  # Create isolated temp directory with guaranteed cleanup
+  tmp_dir <- tempfile(pattern = "readSX_test_")
+  dir.create(tmp_dir)
+  on.exit(unlink(tmp_dir, recursive = TRUE), add = TRUE)
+
+  tmp_dataset <- file.path(tmp_dir, "dataset.csv")
+  file.copy(dataset_path, tmp_dataset)
+  file.copy(labels_path, file.path(tmp_dir, "labels.csv"))
+  file.copy(structure_path, file.path(tmp_dir, "structure.csv"))
+
+  # Read original, drop a column, re-write
+  original <- utils::read.delim(
+    tmp_dataset,
+    fileEncoding = "UTF-16",
+    stringsAsFactors = FALSE,
+    skipNul = TRUE
+  )
+  col_to_drop <- "i_10"
+  original[[col_to_drop]] <- NULL
+  utils::write.table(
+    original,
+    file = tmp_dataset,
+    sep = "\t",
+    row.names = FALSE,
+    fileEncoding = "UTF-16",
+    quote = FALSE
+  )
+
+  files <- c(
+    dataset = tmp_dataset,
+    labels = file.path(tmp_dir, "labels.csv"),
+    structure = file.path(tmp_dir, "structure.csv")
+  )
+
+  # Expect warnings for both Labels and Structure mismatches
+  warnings <- testthat::capture_warnings(
+    readSX::read_surveyxact(filepath = files)
+  )
+  testthat::expect_true(
+    any(grepl("Labels-variables", warnings)),
+    info = "Expected warning about unmatched Labels-variables"
+  )
+  testthat::expect_true(
+    any(grepl("Structure-variables", warnings)),
+    info = "Expected warning about unmatched Structure-variables"
   )
 })
 

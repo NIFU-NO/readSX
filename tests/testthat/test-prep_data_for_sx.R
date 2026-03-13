@@ -7,6 +7,6 @@ testthat::test_that("write_data_for_sx", {
   testthat::expect_error(
     readSX::write_data_for_sx(mtcars,
                     filepath = tmpfile),
-  regexp = "already exists\\. Consider `overwrite = FALSE`")
+  regexp = "already exists\\. Consider `overwrite = TRUE`")
   unlink(tmpfile)
 })
