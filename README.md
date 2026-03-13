@@ -9,11 +9,11 @@
 stable](https://lifecycle.r-lib.org/articles/figures/lifecycle-stable.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/readSX)](https://CRAN.R-project.org/package=readSX)
-[![R-CMD-check](https://github.com/sda030/readSX/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/sda030/readSX/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/NIFU-NO/readSX/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/NIFU-NO/readSX/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
-coverage](https://codecov.io/gh/sda030/readSX/branch/main/graph/badge.svg)](https://app.codecov.io/gh/sda030/readSX?branch=main)
+coverage](https://codecov.io/gh/NIFU-NO/readSX/branch/main/graph/badge.svg)](https://app.codecov.io/gh/NIFU-NO/readSX?branch=main)
 [![Codecov test
-coverage](https://codecov.io/gh/sda030/readSX/graph/badge.svg)](https://app.codecov.io/gh/sda030/readSX)
+coverage](https://codecov.io/gh/NIFU-NO/readSX/graph/badge.svg)](https://app.codecov.io/gh/NIFU-NO/readSX)
 <!-- badges: end -->
 
 The goal of readSX is to import survey data collected from the
